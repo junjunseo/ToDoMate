@@ -1,6 +1,6 @@
 package com.example.todo_api.todo;
 
-import com.example.todo_api.member.Member;
+import com.example.todo_api.user.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -20,15 +20,19 @@ public class Todo {
     private String content;
 
     @Column(name="todo_is_checked", columnDefinition="tinyint(1)")
-    private boolean ischecked;
+    private boolean isChecked;
 
     @JoinColumn(name="member_id")
     @ManyToOne(fetch=FetchType.LAZY)
-    private Member member;
+    private User user;
 
-    public Todo(String content, boolean ischecked, Member member){
+    public Todo(String content, boolean isChecked, User user){
         this.content=content;
-        this.ischecked=ischecked;
-        this.member=member;
+        this.isChecked=isChecked;
+        this.user=user;
+    }
+
+    public void updateContent(String content){
+        this.content=content;
     }
 }
