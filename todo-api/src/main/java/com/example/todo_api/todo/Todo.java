@@ -16,23 +16,26 @@ public class Todo {
     @Column(name="todo_id")
     private Long id;
 
-    @Column(name="todo_content")
+    @Column(name="todo_content", columnDefinition = "varchar(200)")
     private String content;
 
     @Column(name="todo_is_checked", columnDefinition="tinyint(1)")
-    private boolean isChecked;
+    private boolean isChecked = false;
 
     @JoinColumn(name="member_id")
     @ManyToOne(fetch=FetchType.LAZY)
     private User user;
 
-    public Todo(String content, boolean isChecked, User user){
+    public Todo(String content, User user){
         this.content=content;
-        this.isChecked=isChecked;
         this.user=user;
     }
 
     public void updateContent(String content){
         this.content=content;
+    }
+
+    public void setChecked(boolean isChecked){
+        this.isChecked=isChecked;
     }
 }

@@ -17,13 +17,13 @@ public class UserRepository {
         em.persist(user);
     }
 
-    public User findById(long id) {
+    public User findById(Long id) {
         return em.find(User.class, id);
     }
 
     public User findByEmail(String email) {
         return em.createQuery(
-                "select u from User u where u.email = :email",User.class)
+                        "select u from User u where u.email = :email",User.class)
                 .setParameter("email", email)
                 .getResultStream()
                 .findFirst()
@@ -33,7 +33,7 @@ public class UserRepository {
     //이름은 고유하지 않을 수 있으므로 리스트로 구현함
     public List<User> findByName(String name) {
         return em.createQuery(
-                "select u from User u where u.name = :name", User.class)
+                        "select u from User u where u.name = :name", User.class)
                 .setParameter("name", name)
                 .getResultList();
     }
