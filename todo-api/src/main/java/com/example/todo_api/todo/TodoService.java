@@ -1,5 +1,7 @@
 package com.example.todo_api.todo;
 
+import com.example.todo_api.common.BadRequestException;
+import com.example.todo_api.common.ErrorMessage;
 import com.example.todo_api.todo.dto.TodoCreateRequest;
 import com.example.todo_api.todo.dto.TodoResponse;
 import com.example.todo_api.todo.dto.TodoUpdateRequest;
@@ -12,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.example.todo_api.common.ErrorMessage.MEMBER_NOT_EXISTS;
+
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -23,7 +27,7 @@ public class TodoService {
     @Transactional
     public TodoResponse createTodo(TodoCreateRequest req) {
         User user = userRepository.findById(req.getUserId());
-        if(user == null) throw new IllegalArgumentException("User not found");
+        if(user == null) throw new BadRequestException(MEMBER_NOT_EXISTS);
         Todo todo = new Todo(req.getContent(), user);
         todoRepository.save(todo);
         return new TodoResponse(todo);

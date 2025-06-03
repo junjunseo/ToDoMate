@@ -3,6 +3,7 @@ package com.example.todo_api.todo;
 import com.example.todo_api.todo.dto.TodoCreateRequest;
 import com.example.todo_api.todo.dto.TodoResponse;
 import com.example.todo_api.todo.dto.TodoUpdateRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +17,7 @@ public class TodoController {
     private final TodoService todoService;
 
     @PostMapping
-    public ResponseEntity<TodoResponse> create(@RequestBody TodoCreateRequest request) {
+    public ResponseEntity<TodoResponse> create(@RequestBody @Valid TodoCreateRequest request) {
         return ResponseEntity.ok(todoService.createTodo(request));
     }
 
